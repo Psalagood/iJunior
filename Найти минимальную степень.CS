@@ -20,17 +20,18 @@ namespace ConsoleApp1
             int randomNumber;
             int minimumValue = 1;
             int maximumValue = 50;
-            Random rand = new Random(); ;
-            randomNumber = rand.Next(minimumValue, maximumValue);
-            
+            Random random = new Random();
+            randomNumber = random.Next(minimumValue, maximumValue);
+
             for (int i = degreeNumber; i <= randomNumber; i *= degreeNumber)
-                {
+            {
                 result = i;
                 minimalDegree++;
-                }
+            }
+
             Console.WriteLine($"Случайное число: {randomNumber}");
             Console.WriteLine($"Превосходящее случайного числа {result * degreeNumber}");
-            Console.WriteLine($"Это {degreeNumber} в степени {minimalDegree+1}");
+            Console.WriteLine($"Это {degreeNumber} в степени {minimalDegree + 1}");
         }
     }
 
