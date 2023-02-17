@@ -21,6 +21,8 @@ namespace ConsoleApp1
             float nestingValue = 0;
             float openBrasketValue = 0.5f;
             float closeBrasketValue = 0.5f;
+            char openBrasketChar = '(';
+            char closeBrasketChar = ')';
 
             Console.Write("Введи любое кол-во скобок: ");
             brasketsList = Console.ReadLine();
@@ -29,16 +31,16 @@ namespace ConsoleApp1
             {
                 char brasketSymbol = brasketsList[i];
 
-                if (brasketSymbol == ')')
+                if (brasketSymbol == closeBrasketChar)
                 {
                     brasketsValue += closeBrasket;
                     nestingValue += closeBrasketValue;
                 }
-                else if (brasketSymbol == '(')
+                else if (brasketSymbol == openBrasketChar)
                 {
                     brasketsValue += openBrasket;
                     nestingValue += openBrasketValue;
-                }          
+                }
             }
 
             if (brasketsValue != 0)
@@ -47,7 +49,7 @@ namespace ConsoleApp1
             }
             else if (brasketsList[0] == ')' && brasketsList[brasketsList.Length - 1] == '(')
             {
-                Console.WriteLine("Выражение не может начинаться с \")\" и заканчиваться \"(\"");
+                Console.WriteLine($"Выражение не может начинаться с \"{closeBrasketChar}\" и заканчиваться \"{openBrasketChar}\"");
             }
             Console.WriteLine("Вложенность: " + nestingValue);
         }
