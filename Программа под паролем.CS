@@ -18,8 +18,9 @@ namespace ConsoleApp1
             string secretMessage = "я афк";
             int tryCount = 3;
             string userInput;
+            int remainderOfAttempts = tryCount;
 
-            for (int i = 0; i < tryCount; i--)
+            for (int i = 0; i < tryCount; i++)
             {
                 Console.Write("Введи парооль: ");
                 userInput = Console.ReadLine();
@@ -27,22 +28,19 @@ namespace ConsoleApp1
                 if (userInput != password)
                 {
                     Console.WriteLine("Не верно! ");
-                    tryCount--;
-                    Console.WriteLine($"У тебя {tryCount} попыток");
+                    remainderOfAttempts--;
+                    Console.WriteLine($"У тебя {remainderOfAttempts} попыток");
                 }
-
                 else if (userInput == password)
                 {
                     Console.WriteLine("Верно!");
                     Console.WriteLine($"Секретное сообщение было {secretMessage}");
                     break;
                 }
-
-                if (tryCount == 0)
-                {
-                    Console.WriteLine("Попытки кончились");
-                    break;
-                }
+            }
+            if (remainderOfAttempts == 0)
+            {
+                Console.WriteLine("Попытки кончились");
             }
         }
     }
