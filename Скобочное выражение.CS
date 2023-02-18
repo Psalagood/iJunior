@@ -15,12 +15,8 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             string brasketsList;
-            int openBrasket = 1;
-            int closeBrasket = -1;
-            int brasketsValue = 0;
-            float nestingValue = 0;
-            float openBrasketValue = 0.5f;
-            float closeBrasketValue = 0.5f;
+            int depth = 0;
+            int maxDepth = 0;
             char openBrasketChar = '(';
             char closeBrasketChar = ')';
 
@@ -33,17 +29,25 @@ namespace ConsoleApp1
 
                 if (brasketSymbol == closeBrasketChar)
                 {
-                    brasketsValue += closeBrasket;
-                    nestingValue += closeBrasketValue;
+                    depth--;
+                    
+                    if (depth > maxDepth)
+                    {
+                        maxDepth++;
+                    }
                 }
                 else if (brasketSymbol == openBrasketChar)
                 {
-                    brasketsValue += openBrasket;
-                    nestingValue += openBrasketValue;
+                    depth++;
+
+                    if (depth > maxDepth)
+                    {
+                        maxDepth++;
+                    }
                 }
             }
 
-            if (brasketsValue != 0)
+            if (depth != 0)
             {
                 Console.WriteLine("Введено неверное выражение.");
             }
@@ -51,7 +55,12 @@ namespace ConsoleApp1
             {
                 Console.WriteLine($"Выражение не может начинаться с \"{closeBrasketChar}\" и заканчиваться \"{openBrasketChar}\"");
             }
-            Console.WriteLine("Вложенность: " + nestingValue);
+            else if (depth == 0)
+            {
+                Console.WriteLine("Запись корректна");
+            }
+            Console.WriteLine("Глубина: " + depth);
+            Console.WriteLine("Максимальная глубина: " + maxDepth);
         }
 
     }
