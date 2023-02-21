@@ -4,20 +4,34 @@ namespace ConsoleApp1
 {
     internal class Program
     {
+        static void healthBar(int heroBarHealth, int heroBarMana)
+        {
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"#########\n" +
+                        $"ХП:   {heroBarHealth}\n" +
+                        $"Мана: {heroBarMana}\n" +
+                        $"#########");
+                Console.ResetColor();
+            }
+        }
         static void Main(string[] args)
         {
             {
                 int bossDamage = 15;
-                int bossHealth = 150;
+                int bossHealth = 8000;
                 int bossMana = 1500;
                 int bossArmor = 0;
+                int absorbedDamage;
 
                 int heroDamage = 60;
                 int heroHealth = 150;
                 int heroMana = 100;
-                int heroArmor = 10;
                 int manaRegeneration = 11;
                 int maximumHeroMana = 100;
+                int minimumHeroMana = 0;
+                int maximumHeroHealth = 150;
+                int minimumHealth = 0;
                 int criticalMultipler = 3;
                 int getCritical = 7;
                 int getOneShot = 15;
@@ -48,7 +62,7 @@ namespace ConsoleApp1
                                   $"Тебя даже вчерашний шторм не разбудил.\n" +
                                   $"Говорят, мы уже приплыли в Морровинд\n");
                 Console.WriteLine($"Ты выходишь из корабля и видишь огромную чёрную дверь.\n" +
-                                  $"что за ней, ты не знаешь...\n" +
+                                  $"что за ней, ты не знаешь.\n" +
                                   $"Открыв дверь, ты видишь толстого гнома. Выглядит агрессивно.");
                 Console.WriteLine($"Гном как только тебя увидел, побежал в твою сторону.\n" +
                                   $"Пристально вглядевшись ты заметил что:\n");
@@ -93,36 +107,46 @@ namespace ConsoleApp1
                                     Random oneShotMechanic = new Random();
                                     int fireBlow = oneShotMechanic.Next(5, 50);
 
+                                    healthBar(heroHealth, heroMana);
                                     Console.WriteLine($"Выбери скилл:" +
                                                         $"\n{FireBolt} - Кинуть шар\n" +
                                                         $"{GhostBlade} - Кинуть клинок\n" +
                                                         $"{Invisibility} - Уйти в инвиз\n" +
                                                         $"{StaffStrike} - Попробовать ударить посохом.");
-                                    Console.WriteLine("Введи число: ");
+                                    Console.Write("Введи число: ");
                                     bossFight = Console.ReadLine();
                                     Console.Clear();
 
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.WriteLine($"#######\n" +
-                                            $"ХП:   {heroHealth}\n" +
-                                            $"Мана: {heroMana}\n" +
-                                            $"#######");
-                                    Console.ResetColor();
-
                                     switch (bossFight)
+
                                     {
                                         case FireBolt:
-                                            Console.WriteLine("ok");
-                                            if (chanceCriticalAttack == getCritical)
+
+                                            if (heroMana >= minimumHeroMana && heroMana >= manaPriceFireBolt)
                                             {
-                                                Console.WriteLine($"Критический урон! ты нанёс: {fireBoltCriticalDamage} урона огненным шаром!.");
+                                                if (chanceCriticalAttack == getCritical)
+                                                {
+
+                                                    Console.WriteLine($"Критический урон! ты нанёс: {fireBoltCriticalDamage} урона огненным шаром!.");
+                                                    heroMana -= manaPriceFireBolt;
+                                                    break;
+                                                }
+
+                                                Console.WriteLine($"Ты наносишь {fireBolt} урона огненным шаром!.");
+                                                Console.WriteLine($"#");
+                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                Console.WriteLine($"Гном бьёт тебя в лицо, нанося {bossDamage} урона.");
+                                                Console.ResetColor();
+                                                heroHealth -= bossDamage;
+                                                heroMana -= manaPriceFireBolt;
+                                                Console.WriteLine($"#");
+                                                Console.WriteLine($"#");
                                                 break;
                                             }
-                                            Console.WriteLine($"Ты наносишь {fireBolt} урона огненным шаром!.");
-                                            Console.WriteLine($"#");
-                                            Console.WriteLine($"#");
-                                            Console.WriteLine($"#");
-                                            Console.WriteLine($"#");
+                                            else;
+
+                                            Console.WriteLine("Недостаточно маны.");
+                                            heroMana = minimumHeroMana;
                                             break;
 
                                         case GhostBlade:
@@ -139,47 +163,63 @@ namespace ConsoleApp1
                                             Console.WriteLine($"#");
                                             break;
                                         case Invisibility:
-                                            Console.WriteLine($"Моментально уходишь в инвиз, и восстанавливаешь себе {invisibility} здоровья.");
-
-                                            for (int manaMechanics = heroMana; manaMechanics < maximumHeroMana;)
+                                            Console.WriteLine($"Ты уходишь в инвиз");
+                                            if (heroHealth >= maximumHeroHealth)
                                             {
-                                                heroMana += manaRegeneration;
-                                                Console.WriteLine("Дополнительное восстановление маны: +" + manaRegeneration);
+                                                heroHealth = maximumHeroHealth;
                                                 break;
                                             }
+
+                                            Console.WriteLine($"Восстанавливаешь себе {invisibility} здоровья.");
+                                            heroHealth += invisibility;
                                             break;
+
 
                                         case StaffStrike:
                                             if (chanceCriticalAttack == getCritical)
                                             {
                                                 Console.WriteLine($"Критический урон! Ты нанёс: {heroCriticalDamage} урона");
                                                 bossHealth -= heroCriticalDamage;
-                                                if (heroMana == maximumHeroMana)
-                                                {
-                                                    Console.WriteLine("Уже максимальное колличество маны! Больше восстановить не получится.");
-                                                    break;
-                                                }
-                                                else if (heroMana != maximumHeroMana)
+
+                                                if (heroMana != maximumHeroMana)
                                                 {
                                                     heroMana += manaRegeneration;
+                                                    Console.ForegroundColor = ConsoleColor.Blue;
                                                     Console.WriteLine($"Удар посохом восстанавливает вам ману." +
                                                                     $" + {manaRegeneration} маны за удар.");
+                                                    Console.ResetColor();
+                                                    break;
                                                 }
-                                                break;
+
+                                                else if (heroMana >= maximumHeroMana)
+                                                {
+                                                    heroMana = maximumHeroMana;
+                                                    break;
+                                                }
+ 
                                             }
                                             Console.WriteLine($"Ты бьёшь посохом нанося {heroDamage} урона.");
                                             bossHealth -= heroDamage;
 
                                             if (heroMana == maximumHeroMana)
                                             {
-                                                Console.WriteLine("Уже максимальное колличество маны! Больше восстановить не получится.");
+                                                Console.WriteLine($"Удар посохом должен восстановить ману." +
+                                                                $" + {manaRegeneration} маны за удар.");
+                                                Console.WriteLine("Мана полная! Больше восстановить не получится.");
                                                 break;
                                             }
                                             else if (heroMana != maximumHeroMana)
                                             {
+                                                Console.ForegroundColor = ConsoleColor.Blue;
                                                 heroMana += manaRegeneration;
                                                 Console.WriteLine($"Удар посохом восстанавливает вам ману." +
                                                                 $" + {manaRegeneration} маны за удар.");
+                                                Console.ResetColor();
+                                            }
+                                            else if (heroMana >= maximumHeroMana)
+                                            {
+                                                heroMana = maximumHeroMana;
+                                                break;
                                             }
                                             break;
                                         default:
