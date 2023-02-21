@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace ConsoleApp1
 {
@@ -43,7 +44,6 @@ namespace ConsoleApp1
                 int manaPriceInvisibility = 40;
                 int manaPriceStaffStrike = 0;
 
-
                 bool heroAlive = true;
                 bool bossAlive = true;
                 string operationCodeSelectPath;
@@ -55,7 +55,12 @@ namespace ConsoleApp1
                 const string Invisibility = "3";
                 const string StaffStrike = "4";
                 string bossFight;
-
+                int getBlow = 1;
+                int getAxeStrike = 2;
+                int getCleave = 3;
+                int getJumpKick = 4;
+                int getKick = 5;
+                int getStrangle = 6;
 
                 Console.WriteLine("#");
                 Console.WriteLine($"Эй, проснись! Ну ты и соня.\n" +
@@ -106,6 +111,10 @@ namespace ConsoleApp1
 
                                     Random oneShotMechanic = new Random();
                                     int fireBlow = oneShotMechanic.Next(5, 50);
+
+                                    Random changeBossTypeDamge = new Random();
+                                    int bossTypeDamage = changeBossTypeDamge.Next(0, 7);
+
 
                                     healthBar(heroHealth, heroMana);
                                     Console.WriteLine($"Выбери скилл:" +
@@ -201,7 +210,12 @@ namespace ConsoleApp1
                                             Console.WriteLine($"Ты бьёшь посохом нанося {heroDamage} урона.");
                                             bossHealth -= heroDamage;
 
-                                            if (heroMana == maximumHeroMana)
+                                            if (heroMana >= maximumHeroMana)
+                                            {
+                                                heroMana = maximumHeroMana;
+                                                break;
+                                            }
+                                            else if (heroMana == maximumHeroMana)
                                             {
                                                 Console.WriteLine($"Удар посохом должен восстановить ману." +
                                                                 $" + {manaRegeneration} маны за удар.");
@@ -215,11 +229,6 @@ namespace ConsoleApp1
                                                 Console.WriteLine($"Удар посохом восстанавливает вам ману." +
                                                                 $" + {manaRegeneration} маны за удар.");
                                                 Console.ResetColor();
-                                            }
-                                            else if (heroMana >= maximumHeroMana)
-                                            {
-                                                heroMana = maximumHeroMana;
-                                                break;
                                             }
                                             break;
                                         default:
@@ -248,7 +257,7 @@ namespace ConsoleApp1
                                 }
                                 break;
                             }
-                        case RunAway:
+                        case RunAway:                    
                             {
                                 Console.Clear();
                                 Console.WriteLine("Ты не герой!");
