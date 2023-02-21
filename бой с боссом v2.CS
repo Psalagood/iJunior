@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 namespace ConsoleApp1
 {
@@ -14,6 +13,44 @@ namespace ConsoleApp1
                         $"Мана: {heroBarMana}\n" +
                         $"#########");
                 Console.ResetColor();
+            }
+        }
+        static void changeWeaponboss(int changeBosstypeDamage, 
+                                        int changeGetBlow, 
+                                        int changeGetAxeStrike, 
+                                        int changeGetCleave, 
+                                        int changeGetJumpKick, 
+                                        int changeGetKick, 
+                                        int changeGetStrangle, 
+                                        int heroBarHealth,
+                                        int getOneShotMechanic)
+        {
+            {
+                if (changeBosstypeDamage == changeGetBlow)
+                {
+                    Console.WriteLine("Удар обухом! ");
+                }
+                else if (changeBosstypeDamage == changeGetAxeStrike)
+                {
+                    Console.WriteLine("Удар топором!");
+                }
+                else if (changeBosstypeDamage == changeGetCleave)
+                {
+                    Console.WriteLine("Разрезающий удар!");
+                }
+                else if (changeBosstypeDamage == changeGetJumpKick)
+                {
+                    Console.WriteLine("Удар в прыжке!");
+                }
+                else if (changeBosstypeDamage == changeGetKick)
+                {
+                    Console.WriteLine("Тебя пнули!");
+                }
+                else if (changeBosstypeDamage == changeGetStrangle)
+                {
+                    Console.WriteLine("Тебя задушили!");
+                    heroBarHealth -= getOneShotMechanic;
+                }
             }
         }
         static void Main(string[] args)
@@ -61,6 +98,10 @@ namespace ConsoleApp1
                 int getJumpKick = 4;
                 int getKick = 5;
                 int getStrangle = 6;
+                int oneShotMechanic = 10000;
+
+
+
 
                 Console.WriteLine("#");
                 Console.WriteLine($"Эй, проснись! Ну ты и соня.\n" +
@@ -109,12 +150,8 @@ namespace ConsoleApp1
                                     Random skillHealthInvisibility = new Random();
                                     int invisibility = skillHealthInvisibility.Next(5, 50);
 
-                                    Random oneShotMechanic = new Random();
-                                    int fireBlow = oneShotMechanic.Next(5, 50);
-
                                     Random changeBossTypeDamge = new Random();
-                                    int bossTypeDamage = changeBossTypeDamge.Next(0, 7);
-
+                                    int bossTypeDamage = changeBossTypeDamge.Next(1, 7);
 
                                     healthBar(heroHealth, heroMana);
                                     Console.WriteLine($"Выбери скилл:" +
@@ -135,20 +172,21 @@ namespace ConsoleApp1
                                             {
                                                 if (chanceCriticalAttack == getCritical)
                                                 {
-
                                                     Console.WriteLine($"Критический урон! ты нанёс: {fireBoltCriticalDamage} урона огненным шаром!.");
-                                                    heroMana -= manaPriceFireBolt;
+                                                    changeWeaponboss(bossTypeDamage, getBlow, getAxeStrike, getCleave, getJumpKick, getKick, getStrangle, heroHealth, oneShotMechanic);
+                                                    //heroMana -= manaPriceFireBolt;
                                                     break;
                                                 }
 
                                                 Console.WriteLine($"Ты наносишь {fireBolt} урона огненным шаром!.");
-                                                Console.WriteLine($"#");
+                                                Console.WriteLine($"#{bossTypeDamage}");
                                                 Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine($"Гном бьёт тебя в лицо, нанося {bossDamage} урона.");
+                                                changeWeaponboss(bossTypeDamage,getBlow,getAxeStrike,getCleave,getJumpKick,getKick,getStrangle,heroHealth,oneShotMechanic);
+
                                                 Console.ResetColor();
                                                 heroHealth -= bossDamage;
                                                 heroMana -= manaPriceFireBolt;
-                                                Console.WriteLine($"#");
+                                                Console.WriteLine($"#{bossTypeDamage}");
                                                 Console.WriteLine($"#");
                                                 break;
                                             }
@@ -157,6 +195,7 @@ namespace ConsoleApp1
                                             Console.WriteLine("Недостаточно маны.");
                                             heroMana = minimumHeroMana;
                                             break;
+
 
                                         case GhostBlade:
                                             Console.WriteLine("ok");
@@ -205,7 +244,7 @@ namespace ConsoleApp1
                                                     heroMana = maximumHeroMana;
                                                     break;
                                                 }
- 
+
                                             }
                                             Console.WriteLine($"Ты бьёшь посохом нанося {heroDamage} урона.");
                                             bossHealth -= heroDamage;
@@ -257,7 +296,7 @@ namespace ConsoleApp1
                                 }
                                 break;
                             }
-                        case RunAway:                    
+                        case RunAway:
                             {
                                 Console.Clear();
                                 Console.WriteLine("Ты не герой!");
