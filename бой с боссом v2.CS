@@ -15,42 +15,50 @@ namespace ConsoleApp1
                 Console.ResetColor();
             }
         }
-        static void changeWeaponboss(int changeBosstypeDamage, 
-                                        int changeGetBlow, 
-                                        int changeGetAxeStrike, 
-                                        int changeGetCleave, 
-                                        int changeGetJumpKick, 
-                                        int changeGetKick, 
-                                        int changeGetStrangle, 
+        static void changeWeaponboss(int changeBosstypeDamage,
+                                        int changeGetBlow,
+                                        int changeGetAxeStrike,
+                                        int changeGetCleave,
+                                        int changeGetJumpKick,
+                                        int changeGetKick,
+                                        int changeGetStrangle,
                                         int heroBarHealth,
-                                        int getOneShotMechanic)
+                                        int getOneShotMechanic,
+                                        int getBossDamage)
         {
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 if (changeBosstypeDamage == changeGetBlow)
                 {
                     Console.WriteLine("Удар обухом! ");
+                    Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
                 else if (changeBosstypeDamage == changeGetAxeStrike)
                 {
                     Console.WriteLine("Удар топором!");
+                    Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
                 else if (changeBosstypeDamage == changeGetCleave)
                 {
                     Console.WriteLine("Разрезающий удар!");
+                    Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
                 else if (changeBosstypeDamage == changeGetJumpKick)
                 {
                     Console.WriteLine("Удар в прыжке!");
+                    Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
                 else if (changeBosstypeDamage == changeGetKick)
                 {
                     Console.WriteLine("Тебя пнули!");
+                    Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
                 else if (changeBosstypeDamage == changeGetStrangle)
                 {
                     Console.WriteLine("Тебя задушили!");
-                    heroBarHealth -= getOneShotMechanic;
+                    Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
+                Console.ResetColor();
             }
         }
         static void Main(string[] args)
@@ -58,10 +66,7 @@ namespace ConsoleApp1
             {
                 int bossDamage = 15;
                 int bossHealth = 8000;
-                int bossMana = 1500;
                 int bossArmor = 0;
-                int absorbedDamage;
-
                 int heroDamage = 60;
                 int heroHealth = 150;
                 int heroMana = 100;
@@ -69,24 +74,18 @@ namespace ConsoleApp1
                 int maximumHeroMana = 100;
                 int minimumHeroMana = 0;
                 int maximumHeroHealth = 150;
-                int minimumHealth = 0;
                 int criticalMultipler = 3;
                 int getCritical = 7;
-                int getOneShot = 15;
-                int invulnerabilityPerSecond = 30;
                 int heroCriticalDamage = heroDamage * criticalMultipler;
-
                 int manaPriceFireBolt = 17;
                 int manaPriceGhostBlade = 10;
-                int manaPriceInvisibility = 40;
+                int manaPriceInvisibility = 5;
                 int manaPriceStaffStrike = 0;
-
                 bool heroAlive = true;
                 bool bossAlive = true;
                 string operationCodeSelectPath;
                 const string Fight = "1";
                 const string RunAway = "2";
-                string useSkills;
                 const string FireBolt = "1";
                 const string GhostBlade = "2";
                 const string Invisibility = "3";
@@ -99,9 +98,6 @@ namespace ConsoleApp1
                 int getKick = 5;
                 int getStrangle = 6;
                 int oneShotMechanic = 10000;
-
-
-
 
                 Console.WriteLine("#");
                 Console.WriteLine($"Эй, проснись! Ну ты и соня.\n" +
@@ -121,7 +117,6 @@ namespace ConsoleApp1
                                      $"{Fight} - Нападаем. \n" +
                                      $"{RunAway} - Я толерантен к гномам (уйти).");
                 Console.Write("\nВведи число: ");
-
                 operationCodeSelectPath = Console.ReadLine();
                 Console.Clear();
 
@@ -130,41 +125,35 @@ namespace ConsoleApp1
                     switch (operationCodeSelectPath)
                     {
                         case Fight:
-
                             {
                                 while (heroHealth > 0 && bossHealth > 0)
                                 {
                                     Random criticalChance = new Random();
                                     int chanceCriticalAttack = criticalChance.Next(1, 8);
-
                                     Random skillDamageFireBolt = new Random();
                                     int fireBolt = skillDamageFireBolt.Next(40, 100);
                                     int fireBoldDamage = fireBolt + heroDamage;
                                     int fireBoltCriticalDamage = fireBoldDamage * criticalMultipler;
-
                                     Random skillDamageGhostBlade = new Random();
                                     int ghostBlade = skillDamageGhostBlade.Next(15, 80);
                                     int ghostBladeDamage = ghostBlade + heroDamage;
                                     int ghostBladeCriticalDamage = ghostBladeDamage * criticalMultipler;
-
                                     Random skillHealthInvisibility = new Random();
                                     int invisibility = skillHealthInvisibility.Next(5, 50);
-
                                     Random changeBossTypeDamge = new Random();
                                     int bossTypeDamage = changeBossTypeDamge.Next(1, 7);
 
                                     healthBar(heroHealth, heroMana);
                                     Console.WriteLine($"Выбери скилл:" +
-                                                        $"\n{FireBolt} - Кинуть шар\n" +
-                                                        $"{GhostBlade} - Кинуть клинок\n" +
-                                                        $"{Invisibility} - Уйти в инвиз\n" +
-                                                        $"{StaffStrike} - Попробовать ударить посохом.");
+                                                        $"\n{FireBolt} - Кинуть шар. Стоимость {manaPriceFireBolt} маны.\n" +
+                                                        $"{GhostBlade} - Кинуть клинок. Стоимость {manaPriceGhostBlade} маны.\n" +
+                                                        $"{Invisibility} - Уйти в инвиз. Стоимость {manaPriceInvisibility} маны.\n" +
+                                                        $"{StaffStrike} - Попробовать ударить посохом. Эта способность стоит {manaPriceStaffStrike} маны. ");
                                     Console.Write("Введи число: ");
                                     bossFight = Console.ReadLine();
                                     Console.Clear();
 
                                     switch (bossFight)
-
                                     {
                                         case FireBolt:
 
@@ -173,68 +162,136 @@ namespace ConsoleApp1
                                                 if (chanceCriticalAttack == getCritical)
                                                 {
                                                     Console.WriteLine($"Критический урон! ты нанёс: {fireBoltCriticalDamage} урона огненным шаром!.");
-                                                    changeWeaponboss(bossTypeDamage, getBlow, getAxeStrike, getCleave, getJumpKick, getKick, getStrangle, heroHealth, oneShotMechanic);
-                                                    //heroMana -= manaPriceFireBolt;
+                                                    changeWeaponboss(bossTypeDamage,
+                                                        getBlow,
+                                                        getAxeStrike,
+                                                        getCleave,
+                                                        getJumpKick,
+                                                        getKick,
+                                                        getStrangle,
+                                                        heroHealth,
+                                                        oneShotMechanic,
+                                                        bossDamage);
+                                                    heroMana -= manaPriceFireBolt;
+                                                    heroHealth -= bossDamage;
+                                                    bossHealth -= fireBoltCriticalDamage;
                                                     break;
                                                 }
-
                                                 Console.WriteLine($"Ты наносишь {fireBolt} урона огненным шаром!.");
-                                                Console.WriteLine($"#{bossTypeDamage}");
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                changeWeaponboss(bossTypeDamage,getBlow,getAxeStrike,getCleave,getJumpKick,getKick,getStrangle,heroHealth,oneShotMechanic);
-
-                                                Console.ResetColor();
+                                                changeWeaponboss(bossTypeDamage,
+                                                    getBlow,
+                                                    getAxeStrike,
+                                                    getCleave,
+                                                    getJumpKick,
+                                                    getKick,
+                                                    getStrangle,
+                                                    heroHealth,
+                                                    oneShotMechanic,
+                                                    bossDamage);
                                                 heroHealth -= bossDamage;
                                                 heroMana -= manaPriceFireBolt;
-                                                Console.WriteLine($"#{bossTypeDamage}");
-                                                Console.WriteLine($"#");
+                                                bossHealth -= fireBolt;
                                                 break;
                                             }
                                             else;
-
                                             Console.WriteLine("Недостаточно маны.");
                                             heroMana = minimumHeroMana;
+                                            Console.WriteLine("Недостаточно маны? это твоя ошибка, ты получаешь урон от босса.");
                                             break;
-
 
                                         case GhostBlade:
-                                            Console.WriteLine("ok");
-                                            if (chanceCriticalAttack == getCritical)
+                                            if (heroMana >= minimumHeroMana && heroMana >= manaPriceGhostBlade)
                                             {
-                                                Console.WriteLine($"Критический урон! ты нанёс: {ghostBladeCriticalDamage} урона призрачным клинком!.");
+                                                if (chanceCriticalAttack == getCritical)
+                                                {
+                                                    Console.WriteLine($"Критический урон! ты нанёс: {ghostBladeCriticalDamage} урона призрачным клинком!.");
+                                                    changeWeaponboss(bossTypeDamage,
+                                                            getBlow,
+                                                            getAxeStrike,
+                                                            getCleave,
+                                                            getJumpKick,
+                                                            getKick,
+                                                            getStrangle,
+                                                            heroHealth,
+                                                            oneShotMechanic,
+                                                            bossDamage);
+                                                    heroMana -= manaPriceGhostBlade;
+                                                    heroHealth -= bossDamage;
+                                                    bossHealth -= ghostBladeCriticalDamage;
+                                                    break;
+                                                }
+                                                Console.WriteLine($"Ты наносишь {ghostBlade} урона призрачным клинком!.");
+                                                changeWeaponboss(bossTypeDamage,
+                                                            getBlow,
+                                                            getAxeStrike,
+                                                            getCleave,
+                                                            getJumpKick,
+                                                            getKick,
+                                                            getStrangle,
+                                                            heroHealth,
+                                                            oneShotMechanic,
+                                                            bossDamage);
+                                                heroMana -= manaPriceGhostBlade;
+                                                heroHealth -= bossDamage;
+                                                bossHealth -= ghostBlade;
                                                 break;
                                             }
-                                            Console.WriteLine($"Ты наносишь {ghostBlade} урона призрачным клинком!.");
-                                            Console.WriteLine($"#");
-                                            Console.WriteLine($"#");
-                                            Console.WriteLine($"#");
-                                            Console.WriteLine($"#");
+                                            else;
+                                            Console.WriteLine("Недостаточно маны.");
+                                            heroMana = minimumHeroMana;
+                                            heroHealth -= bossDamage;
+                                            Console.WriteLine("Недостаточно маны? это твоя ошибка, ты получаешь урон от босса.");
                                             break;
+
                                         case Invisibility:
-                                            Console.WriteLine($"Ты уходишь в инвиз");
-                                            if (heroHealth >= maximumHeroHealth)
+                                            if (heroMana >= minimumHeroMana && heroMana >= manaPriceInvisibility)
                                             {
-                                                heroHealth = maximumHeroHealth;
+                                                Console.WriteLine($"Ты уходишь в инвиз");
+                                                if (heroHealth >= maximumHeroHealth)
+                                                {
+                                                    heroHealth = maximumHeroHealth;
+                                                    Console.WriteLine("Ты не получаешь урона, и не восстанавливаешь, ведь у тебя уже максимум.");
+                                                    break;
+                                                }
+                                                Console.WriteLine($"Восстанавливаешь себе {invisibility} здоровья.");
+                                                heroHealth += invisibility;
+                                                heroMana -= manaPriceInvisibility;
                                                 break;
                                             }
-
-                                            Console.WriteLine($"Восстанавливаешь себе {invisibility} здоровья.");
-                                            heroHealth += invisibility;
+                                            else;
+                                            Console.WriteLine("Недостаточно маны.");
+                                            heroMana = minimumHeroMana;
+                                            heroHealth -= bossDamage;
+                                            Console.WriteLine("Недостаточно маны? это твоя ошибка, ты получаешь урон от босса.");
                                             break;
-
 
                                         case StaffStrike:
                                             if (chanceCriticalAttack == getCritical)
                                             {
                                                 Console.WriteLine($"Критический урон! Ты нанёс: {heroCriticalDamage} урона");
+                                                Console.WriteLine($"#");
+                                                changeWeaponboss(bossTypeDamage,
+                                                        getBlow,
+                                                        getAxeStrike,
+                                                        getCleave,
+                                                        getJumpKick,
+                                                        getKick,
+                                                        getStrangle,
+                                                        heroHealth,
+                                                        oneShotMechanic,
+                                                        bossDamage);
+                                                bossHealth -= heroCriticalDamage;
+                                                heroHealth -= bossDamage;
                                                 bossHealth -= heroCriticalDamage;
 
                                                 if (heroMana != maximumHeroMana)
                                                 {
                                                     heroMana += manaRegeneration;
+                                                    heroHealth -= bossDamage;
                                                     Console.ForegroundColor = ConsoleColor.Blue;
                                                     Console.WriteLine($"Удар посохом восстанавливает вам ману." +
                                                                     $" + {manaRegeneration} маны за удар.");
+                                                    Console.WriteLine($"#");
                                                     Console.ResetColor();
                                                     break;
                                                 }
@@ -244,10 +301,19 @@ namespace ConsoleApp1
                                                     heroMana = maximumHeroMana;
                                                     break;
                                                 }
-
                                             }
                                             Console.WriteLine($"Ты бьёшь посохом нанося {heroDamage} урона.");
                                             bossHealth -= heroDamage;
+                                            changeWeaponboss(bossTypeDamage,
+                                                        getBlow,
+                                                        getAxeStrike,
+                                                        getCleave,
+                                                        getJumpKick,
+                                                        getKick,
+                                                        getStrangle,
+                                                        heroHealth,
+                                                        oneShotMechanic,
+                                                        bossDamage);
 
                                             if (heroMana >= maximumHeroMana)
                                             {
@@ -265,6 +331,8 @@ namespace ConsoleApp1
                                             {
                                                 Console.ForegroundColor = ConsoleColor.Blue;
                                                 heroMana += manaRegeneration;
+                                                heroHealth -= bossDamage;
+                                                bossHealth -= heroDamage;
                                                 Console.WriteLine($"Удар посохом восстанавливает вам ману." +
                                                                 $" + {manaRegeneration} маны за удар.");
                                                 Console.ResetColor();
@@ -274,13 +342,11 @@ namespace ConsoleApp1
                                             Console.WriteLine("Команда не найдена.\n");
                                             break;
                                     }
-
                                     Console.WriteLine($"#");
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine($"Здоровье босса: {bossHealth}");
                                     Console.ResetColor();
                                     Console.WriteLine($"#");
-
                                 }
                                 Console.Clear();
 
