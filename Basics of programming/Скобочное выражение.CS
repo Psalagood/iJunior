@@ -26,11 +26,16 @@ namespace ConsoleApp1
             for (int i = 0; i < brasketsList.Length; i++)
             {
                 char brasketSymbol = brasketsList[i];
-
-                if (brasketSymbol == closeBrasketChar)
+                
+                if (depth < 0)
+                {
+                    Console.WriteLine("Введено неверное выражение.");
+                    break;
+                }
+                else if (brasketSymbol == closeBrasketChar)
                 {
                     depth--;
-                    
+
                     if (depth > maxDepth)
                     {
                         maxDepth++;
@@ -47,11 +52,7 @@ namespace ConsoleApp1
                 }
             }
 
-            if (depth != 0)
-            {
-                Console.WriteLine("Введено неверное выражение.");
-            }
-            else if (brasketsList[0] == ')' && brasketsList[brasketsList.Length - 1] == '(')
+            if (brasketsList[0] == ')' && brasketsList[brasketsList.Length - 1] == '(')
             {
                 Console.WriteLine($"Выражение не может начинаться с \"{closeBrasketChar}\" и заканчиваться \"{openBrasketChar}\"");
             }
