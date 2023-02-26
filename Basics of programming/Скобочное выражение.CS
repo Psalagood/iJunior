@@ -1,12 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleApp1
 {
@@ -26,25 +18,22 @@ namespace ConsoleApp1
             for (int i = 0; i < brasketsList.Length; i++)
             {
                 char brasketSymbol = brasketsList[i];
-                
+
                 if (depth < 0)
                 {
-                    Console.WriteLine("Введено неверное выражение.");
+                    Console.WriteLine("Выражение не верное");
                     break;
                 }
-                else if (brasketSymbol == closeBrasketChar)
+                else;
                 {
-                    depth--;
-
-                    if (depth > maxDepth)
+                    if (brasketSymbol == closeBrasketChar)
                     {
-                        maxDepth++;
+                        depth--;
                     }
-                }
-                else if (brasketSymbol == openBrasketChar)
-                {
-                    depth++;
-
+                    if (brasketSymbol == openBrasketChar)
+                    {
+                        depth++;
+                    }
                     if (depth > maxDepth)
                     {
                         maxDepth++;
@@ -52,17 +41,16 @@ namespace ConsoleApp1
                 }
             }
 
-            if (brasketsList[0] == ')' && brasketsList[brasketsList.Length - 1] == '(')
-            {
-                Console.WriteLine($"Выражение не может начинаться с \"{closeBrasketChar}\" и заканчиваться \"{openBrasketChar}\"");
-            }
-            else if (depth == 0)
+            if (depth == 0)
             {
                 Console.WriteLine("Запись корректна");
+            }
+            else;
+            {
+                Console.WriteLine("запись не верна.");
             }
             Console.WriteLine("Глубина: " + depth);
             Console.WriteLine("Максимальная глубина: " + maxDepth);
         }
-
     }
 }
