@@ -34,6 +34,7 @@ namespace ConsoleApp1
                     {
                         depth++;
                     }
+
                     if (depth > maxDepth)
                     {
                         maxDepth++;
@@ -45,9 +46,9 @@ namespace ConsoleApp1
             {
                 Console.WriteLine("Запись корректна");
             }
-            else;
+            if (depth != 0)
             {
-                Console.WriteLine("запись не верна.");
+               Console.WriteLine("запись не верна.");
             }
             Console.WriteLine("Глубина: " + depth);
             Console.WriteLine("Максимальная глубина: " + maxDepth);
