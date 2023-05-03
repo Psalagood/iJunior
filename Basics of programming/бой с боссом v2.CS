@@ -29,47 +29,35 @@ namespace ConsoleApp1
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 if (changeBosstypeDamage == changeGetBlow)
-
                 {
                     Console.WriteLine("Удар обухом! ");
                     Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
-
                 else if (changeBosstypeDamage == changeGetAxeStrike)
-
                 {
                     Console.WriteLine("Удар топором!");
                     Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
-
                 else if (changeBosstypeDamage == changeGetCleave)
-
                 {
                     Console.WriteLine("Разрезающий удар!");
                     Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
-
                 else if (changeBosstypeDamage == changeGetJumpKick)
-
                 {
                     Console.WriteLine("Удар в прыжке!");
                     Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
-
                 else if (changeBosstypeDamage == changeGetKick)
-
                 {
                     Console.WriteLine("Тебя пнули!");
                     Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
-
                 else if (changeBosstypeDamage == changeGetStrangle)
-
                 {
                     Console.WriteLine("Тебя задушили!");
                     Console.WriteLine($"Нанесено {getBossDamage} урона.");
                 }
-
                 Console.ResetColor();
             }
         }
@@ -135,13 +123,10 @@ namespace ConsoleApp1
 
                 while (heroAlive && bossAlive)
                 {
-
                     switch (operationCodeSelectPath)
                     {
-
                         case MenuFight:
                             {
-
                                 while (heroHealth > 0 && bossHealth > 0)
                                 {
                                     Random criticalChance = new Random();
@@ -171,7 +156,6 @@ namespace ConsoleApp1
 
                                     switch (bossFight)
                                     {
-
                                         case CommandFireBolt:
 
                                             if (heroMana >= minimumHeroMana && heroMana >= manaPriceFireBolt)
@@ -194,7 +178,6 @@ namespace ConsoleApp1
                                                     bossHealth -= fireBoltCriticalDamage;
                                                     break;
                                                 }
-
                                                 Console.WriteLine($"Ты наносишь {fireBolt} урона огненным шаром!.");
                                                 ChangeWeaponBoss(bossTypeDamage,
                                                     getBlow,
@@ -211,7 +194,6 @@ namespace ConsoleApp1
                                                 bossHealth -= fireBolt;
                                                 break;
                                             }
-
                                             else;
                                             Console.WriteLine("Недостаточно маны.");
                                             heroMana = minimumHeroMana;
@@ -315,7 +297,6 @@ namespace ConsoleApp1
                                                     Console.ResetColor();
                                                     break;
                                                 }
-
                                                 else if (heroMana >= maximumHeroMana)
                                                 {
                                                     heroMana = maximumHeroMana;
@@ -376,7 +357,6 @@ namespace ConsoleApp1
                                     heroAlive = false;
                                     bossAlive = false;
                                 }
-
                                 else if (heroHealth <= 0)
                                 {
                                     Console.WriteLine("Тебя отпинали как собаку.");
