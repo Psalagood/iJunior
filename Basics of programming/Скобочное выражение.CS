@@ -17,8 +17,6 @@ namespace ConsoleApp1
 
             for (int i = 0; i < brasketsList.Length; i++)
             {
-                char brasketSymbol = brasketsList[i];
-
                 if (depth < 0)
                 {
                     Console.WriteLine("Выражение не верное");
@@ -26,11 +24,11 @@ namespace ConsoleApp1
                 }
                 else;
                 {
-                    if (brasketSymbol == closeBrasketChar)
+                    if (brasketsList[i] == closeBrasketChar)
                     {
                         depth--;
                     }
-                    if (brasketSymbol == openBrasketChar)
+                    if (brasketsList[i] == openBrasketChar)
                     {
                         depth++;
                     }
@@ -48,9 +46,8 @@ namespace ConsoleApp1
             }
             if (depth != 0)
             {
-               Console.WriteLine("запись не верна.");
+                Console.WriteLine("запись не верна.");
             }
-            Console.WriteLine("Глубина: " + depth);
             Console.WriteLine("Максимальная глубина: " + maxDepth);
         }
     }
